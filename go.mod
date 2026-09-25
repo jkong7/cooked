@@ -1,6 +1,6 @@
 module github.com/jkong7/cooked
 
-go 1.27.1
+go 1.26.0
 
 require (
 	github.com/anthropics/anthropic-sdk-go v1.75.0
