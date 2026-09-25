@@ -73,6 +73,10 @@
     const shown = bubbles.filter((_, i) => t >= T.intro + i * per);
     let total = shown.reduce((s, b) => s + b.h + 24, 0);
     let y = top - Math.max(0, total - (bottom - top));
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(0, top - 10, W, bottom - top + 20);
+    ctx.clip();
     shown.forEach((b, i) => {
       const age = t - (T.intro + i * per);
       const k = ease(age / 0.35);
@@ -93,6 +97,12 @@
       y += b.h + 24;
       ctx.globalAlpha = 1;
     });
+    ctx.restore();
+    const fade = ctx.createLinearGradient(0, top - 10, 0, top + 70);
+    fade.addColorStop(0, C.bg);
+    fade.addColorStop(1, "rgba(12,10,9,0)");
+    ctx.fillStyle = fade;
+    ctx.fillRect(0, top - 10, W, 80);
 
     const votesTotal = m.crowd_a + m.crowd_b;
     const finalA = votesTotal ? m.crowd_a / votesTotal : (m.score_a || 50) / 100;
@@ -138,7 +148,7 @@
       ctx.fillStyle = C.muted;
       ctx.font = `700 32px ${FONT}`;
       ctx.textAlign = "center";
-      ctx.fillText(m.decided_by === "crowd" ? "decided by the crowd" : "decided by the AI judge", W / 2, H - 90);
+      ctx.fillText(m.decided_by === "crowd" ? "decided by the crowd" : "decided by the judge", W / 2, H - 90);
       ctx.textAlign = "left";
       ctx.globalAlpha = 1;
     }

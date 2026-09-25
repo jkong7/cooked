@@ -99,7 +99,7 @@ function liveCard(m, watching) {
 
 function recentCard(m) {
   return `<a class="card" data-link href="/m/${m.code}"><div class="p">“${esc(m.prompt)}”</div>
-    <div class="small" style="margin-top:6px"><b class="fire">${esc(m.headline || "Verdict in")}</b> <span class="muted">· ${m.decided_by === "crowd" ? "crowd vote" : "AI judge"} · ${ago(m.ended_at)}</span></div></a>`;
+    <div class="small" style="margin-top:6px"><b class="fire">${esc(m.headline || "Verdict in")}</b> <span class="muted">· ${m.decided_by === "crowd" ? "crowd vote" : "judge"} · ${ago(m.ended_at)}</span></div></a>`;
 }
 
 async function lobby() {
@@ -110,7 +110,7 @@ async function lobby() {
   const mins = Math.max(1, Math.round((new Date(L.next_rotation) - Date.now()) / 60000));
   app.innerHTML = `<div class="wrap">${header()}
     <div class="hero">
-      <div class="kicker"><span class="dot"></span>${f.id === L.featured.id ? `Take of the hour · new one in ${mins}m` : "Your pick"}</div>
+      <div class="kicker"><span class="dot"></span>${f.id === L.featured.id ? `Live take · next one in ${mins}m` : "Your pick"}</div>
       <div class="take">“${esc(f.text)}”</div>
       <div class="muted">Pick a side. We find someone who disagrees. Three rounds, 45 seconds each. The crowd votes, an AI judges.</div>
       <div class="sides"><button class="side a" data-side="a">AGREE</button><button class="side b" data-side="b">DISAGREE</button></div>
@@ -201,7 +201,7 @@ function bubbles(m) {
   if (m.status === "live") {
     const side = m.turn % 2 === 0 ? "a" : "b";
     const p = side === "a" ? m.a : m.b;
-    out.push(`<div class="typing ${side}">${esc(p ? p.name : "?")} is typing…</div>`);
+    if (side !== mySide(m) && p) out.push(`<div class="typing ${side}">${esc(p.name)} ${p.bot ? "is typing…" : "is up…"}</div>`);
   }
   return out.join("");
 }
@@ -209,7 +209,7 @@ function bubbles(m) {
 function renderMatch() {
   const m = S.match;
   const me = mySide(m);
-  const pa = share(m.crowd_a, m.crowd_b);
+  const pa = m.status === "done" && m.decided_by === "judge" && m.crowd_a + m.crowd_b === 0 ? m.score_a : share(m.crowd_a, m.crowd_b);
   const b = m.b || { name: "waiting…", tier: "" };
   const round = Math.min(3, Math.floor(m.turn / 2) + 1);
   const stage = m.status === "live" ? `Round ${round} of 3` : m.status === "voting" ? "Final votes" : m.status === "judging" ? "The judge is deliberating" : m.status === "waiting" ? "Waiting for an opponent" : "Verdict";
@@ -231,10 +231,10 @@ function renderMatch() {
   if (m.status === "done") {
     const won = me && m.winner === me;
     const delta = me ? (won ? `+${Math.round(m.delta)}` : `−${Math.round(m.delta)}`) : "";
-    verdict = `<div class="verdict"><div class="small muted">${m.decided_by === "crowd" ? `Crowd ${pa}–${100 - pa}` : `AI judge ${m.score_a}–${100 - m.score_a}`}</div>
+    verdict = `<div class="verdict"><div class="small muted">${m.decided_by === "crowd" ? `Crowd ${pa}–${100 - pa}` : `Judge ${m.score_a}–${100 - m.score_a}`}</div>
       <div class="head">${esc(m.headline)}</div><div class="reason">${esc(m.reason)}</div>
       <div class="roast"><b class="a">${esc(m.a.name)}:</b> ${esc(m.roast_a)}</div><div class="roast"><b class="b">${esc(b.name)}:</b> ${esc(m.roast_b)}</div>
-      ${me ? `<div class="delta ${won ? "a" : "b"}">${won ? "You cooked." : "You got cooked."} ${delta} rating</div>` : ""}
+      ${me ? `<div class="delta" style="color:${won ? "var(--ok)" : "var(--b)"}">${won ? "You cooked." : "You got cooked."} ${delta} rating</div>` : ""}
       <div class="row" style="margin-top:14px"><button class="btn" id="clip">Save the clip</button><button class="btn ghost" id="shr">Share</button></div>
       ${m.prompt_id ? `<button class="btn ghost" id="again" style="margin-top:10px">Run it back</button>` : ""}</div>`;
   }

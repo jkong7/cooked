@@ -63,7 +63,7 @@ h2 { font-size: .78rem; text-transform: uppercase; letter-spacing: .1em; color: 
 .clock { font-weight: 950; font-variant-numeric: tabular-nums; font-size: 1.35rem; min-width: 56px; text-align: center; }
 .clock.hot { color: var(--b); animation: pulse .6s infinite; }
 .feed { flex: 1; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
-.bubble { max-width: 84%; padding: 11px 14px; border-radius: 18px; line-height: 1.35; font-size: .98rem; animation: pop .25s cubic-bezier(.2,.8,.2,1); overflow-wrap: anywhere; }
+.bubble { color: var(--fg); max-width: 84%; padding: 11px 14px; border-radius: 18px; line-height: 1.35; font-size: .98rem; animation: pop .25s cubic-bezier(.2,.8,.2,1); overflow-wrap: anywhere; }
 .bubble.a { align-self: flex-start; background: color-mix(in srgb, var(--a) 16%, var(--card)); border-bottom-left-radius: 6px; }
 .bubble.b { align-self: flex-end; background: color-mix(in srgb, var(--b) 16%, var(--card)); border-bottom-right-radius: 6px; }
 .bubble.choke { opacity: .55; font-style: italic; }
