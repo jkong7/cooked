@@ -42,6 +42,23 @@ var All = []Prompt{
 	{28, "Brunch is overrated.", "food"},
 	{29, "Being funny beats being hot.", "dating"},
 	{30, "College is a four-year vacation you pay for.", "money"},
+	{31, "Free will is an illusion.", "philosophy"},
+	{32, "Being single past 25 is a choice.", "dating"},
+	{33, "College is still worth it.", "money"},
+	{34, "Looks matter more than personality in dating.", "dating"},
+	{35, "Your 20s decide the rest of your life.", "life"},
+	{36, "Having no friends in your 20s is your own fault.", "life"},
+	{37, "Being born is being forced to work.", "money"},
+	{38, "Not having kids because of the economy is the responsible choice.", "money"},
+	{39, "NEETs are smarter than people grinding a 9 to 5.", "money"},
+	{40, "Tall guys get away with red flags.", "dating"},
+	{41, "Dating in America is uniquely bad.", "dating"},
+	{42, "Flexing a supercar you financed makes you the richest poor person.", "money"},
+	{43, "Ten years at the same job is a win, not a warning.", "money"},
+	{44, "Performative readers are worse than doomscrollers.", "life"},
+	{45, "Moving to a big city to escape your parents is worth any rent.", "money"},
+	{46, "Your partner's past should matter to you.", "dating"},
+	{47, "Life is meaningless, and that's freeing.", "philosophy"},
 }
 
 const Window = 10 * time.Minute
