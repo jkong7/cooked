@@ -20,7 +20,7 @@ Every finished debate is a ready-made vertical video. Seed the feed with:
 2. **Crowd flips**: clips where the tug-of-war bar swings in the last seconds.
 3. **"Chud to Goat" series**: one creator climbing the tiers over a week, posting each verdict.
 4. **Group-chat challenges**: "my friend said Marcus can't cook, so we settled it" with the challenge link in bio.
-5. **Take of the hour**: post the live take as a text-on-screen reel with "argue it live" in the caption.
+5. **Live take drops**: post the current take as a text-on-screen reel with "argue it live" in the caption.
 
 ## Guardrails that keep it launchable
 
