@@ -1,0 +1,5 @@
+/cooked
+*.db
+*.db-*
+/bin/
+.env

@@ -19,10 +19,10 @@ type fakeBrain struct {
 	judged atomic.Int32
 }
 
-func (fakeBrain) Moderate(_ context.Context, text string) (bool, string) {
+func (*fakeBrain) Moderate(_ context.Context, text string) (bool, string) {
 	return text != "banned words", "nope"
 }
-func (fakeBrain) Argue(context.Context, ai.Debate, string) (string, error) { return "bot point", nil }
+func (*fakeBrain) Argue(context.Context, ai.Debate, string) (string, error) { return "bot point", nil }
 func (f *fakeBrain) Judge(context.Context, ai.Debate) (ai.Verdict, error) {
 	f.judged.Add(1)
 	return ai.Verdict{Winner: "a", ScoreA: 70, Headline: "A cooked B"}, nil
