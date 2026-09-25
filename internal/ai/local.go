@@ -49,7 +49,20 @@ func pick(seed string, list []string) string {
 }
 
 func (Local) Argue(_ context.Context, d Debate, side string) (string, error) {
-	return pick(fmt.Sprint(d.Prompt, len(d.Turns), side), lines[side]), nil
+	used := map[string]bool{}
+	for _, t := range d.Turns {
+		used[t.Text] = true
+	}
+	h := fnv.New32a()
+	h.Write([]byte(d.Prompt + side))
+	list := lines[side]
+	start := int(h.Sum32()) + len(d.Turns)
+	for i := range list {
+		if line := list[(start+i)%len(list)]; !used[line] {
+			return line, nil
+		}
+	}
+	return list[start%len(list)], nil
 }
 
 func effort(d Debate, side string) float64 {

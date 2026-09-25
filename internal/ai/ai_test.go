@@ -136,3 +136,20 @@ func TestClaudeDownFallsBackToLocal(t *testing.T) {
 		t.Fatalf("argue fallback = %q %v", arg, err)
 	}
 }
+
+func TestLocalArgueDoesNotRepeat(t *testing.T) {
+	d := Debate{Prompt: "p"}
+	seen := map[string]bool{}
+	for i := range 6 {
+		side := "a"
+		if i%2 == 1 {
+			side = "b"
+		}
+		line, _ := Local{}.Argue(context.Background(), d, side)
+		if seen[line] {
+			t.Fatalf("repeated line %q", line)
+		}
+		seen[line] = true
+		d.Turns = append(d.Turns, Turn{Side: side, Text: line})
+	}
+}
